@@ -9,7 +9,7 @@ const TaskItem = ({ task, toggleComplete, removeTask }) => {
       <span>{task.text}</span>
       <button
         onClick={(e) => {
-          e.stopPropagation(); // Evita que el clic en el botón marque la tarea como completada
+          e.stopPropagation(); 
           removeTask(task.id);
         }}
       >

@@ -5,12 +5,12 @@ import TaskList from './components/TaskList/TaskList';
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
-  // Cargar tareas desde el archivo JSON al montar el componente
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  // Función para cargar tareas
+
   const fetchTasks = async () => {
     try {
       const response = await fetch('/tasks.json');
@@ -21,7 +21,6 @@ const App = () => {
     }
   };
 
-  // Función para agregar una tarea
   const addTask = (taskText) => {
     const newTask = {
       id: tasks.length + 1,
@@ -30,23 +29,19 @@ const App = () => {
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
-    // Aquí podrías agregar código para actualizar el archivo JSON en un backend real
+   
   };
 
-  // Función para marcar una tarea como completada o pendiente
   const toggleComplete = (taskId) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskId ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
-    // Aquí podrías agregar código para actualizar el archivo JSON en un backend real
   };
 
-  // Función para eliminar una tarea
   const removeTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
-    // Aquí podrías agregar código para actualizar el archivo JSON en un backend real
   };
 
   return (
