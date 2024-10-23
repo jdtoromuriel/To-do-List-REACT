@@ -5,6 +5,7 @@ import './App.scss';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [editingTask, setEditingTask] = useState(null);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -21,7 +22,7 @@ const App = () => {
       text: taskText,
       completed: false,
     };
-    setTasks([...tasks, newTask]);
+    setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
   const toggleComplete = (id) => {
@@ -38,13 +39,31 @@ const App = () => {
 
   const clearTasks = () => {
     setTasks([]);
+    localStorage.removeItem('tasks');
+  };
+
+  const startEditing = (task) => {
+    setEditingTask(task);
+  };
+
+  const updateTask = (taskText) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === editingTask.id ? { ...task, text: taskText } : task
+    );
+    setTasks(updatedTasks);
+    setEditingTask(null);
   };
 
   return (
     <div className="app">
       <h1>Lista de Tareas</h1>
-      <TaskForm addTask={addTask} />
-      <TaskList tasks={tasks} toggleComplete={toggleComplete} removeTask={removeTask} />
+      <TaskForm addTask={addTask} updateTask={updateTask} editingTask={editingTask} />
+      <TaskList 
+        tasks={tasks} 
+        toggleComplete={toggleComplete} 
+        removeTask={removeTask} 
+        startEditing={startEditing} 
+      />
       <button className="clear-button" onClick={clearTasks}>Limpiar Tareas</button>
     </div>
   );
