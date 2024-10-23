@@ -20,3 +20,4 @@ const TaskItem = ({ task, toggleComplete, removeTask }) => {
 };
 
 export default TaskItem;
+

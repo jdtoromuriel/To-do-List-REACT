@@ -5,18 +5,10 @@ import TaskList from './components/TaskList/TaskList';
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
   useEffect(() => {
     fetchTasks();
   }, []);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
   const fetchTasks = async () => {
     try {
       const response = await fetch('/tasks.json');
@@ -35,11 +27,7 @@ const App = () => {
     };
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
-<<<<<<< HEAD
-   
-=======
 
->>>>>>> master
   };
 
   const toggleComplete = (taskId) => {
@@ -52,10 +40,7 @@ const App = () => {
   const removeTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
-<<<<<<< HEAD
-=======
 
->>>>>>> master
   };
 
   return (
