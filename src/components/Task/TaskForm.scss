@@ -1,6 +1,6 @@
 
 $primary-color: #6200ea;
-$secondary-color: #03dac5;
+$secondary-color: #03dac5;  
 $background-color: #f9f9f9;
 $text-color: #333;
 $completed-task-color: #9e9e9e;
@@ -84,7 +84,7 @@ body {
       cursor: pointer;
       
       &:hover {
-        background-color: $secondary-color;
+        background-color: #e6efee;
       }
 
       &.completed {
