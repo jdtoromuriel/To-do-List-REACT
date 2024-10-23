@@ -1,46 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import TaskForm from './components/Task/TaskForm';
 import TaskList from './components/TaskList/TaskList';
+import './App.scss';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    fetchTasks();
+    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    setTasks(storedTasks);
   }, []);
 
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch('/tasks.json');
-      const data = await response.json();
-      setTasks(data);
-    } catch (error) {
-      console.error('Error al cargar tareas:', error);
-    }
-  };
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (taskText) => {
     const newTask = {
-      id: tasks.length + 1,
+      id: Date.now(),
       text: taskText,
-      completed: false
+      completed: false,
     };
-    const updatedTasks = [...tasks, newTask];
-    setTasks(updatedTasks);
-
+    setTasks([...tasks, newTask]);
   };
 
-  const toggleComplete = (taskId) => {
+  const toggleComplete = (id) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
+      task.id === id ? { ...task, completed: !task.completed } : task
     );
     setTasks(updatedTasks);
   };
 
-  const removeTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+  const removeTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
+  };
 
+  const clearTasks = () => {
+    setTasks([]);
   };
 
   return (
@@ -48,6 +45,7 @@ const App = () => {
       <h1>Lista de Tareas</h1>
       <TaskForm addTask={addTask} />
       <TaskList tasks={tasks} toggleComplete={toggleComplete} removeTask={removeTask} />
+      <button className="clear-button" onClick={clearTasks}>Limpiar Tareas</button>
     </div>
   );
 };
