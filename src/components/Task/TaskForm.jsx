@@ -1,14 +1,25 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TaskForm.scss';
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = ({ addTask, updateTask, editingTask }) => {
   const [task, setTask] = useState('');
+
+  useEffect(() => {
+    if (editingTask) {
+      setTask(editingTask.text);
+    } else {
+      setTask('');
+    }
+  }, [editingTask]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (task.trim()) {
-      addTask(task);
+      if (editingTask) {
+        updateTask(task);
+      } else {
+        addTask(task);
+      }
       setTask('');
     }
   };
@@ -21,7 +32,7 @@ const TaskForm = ({ addTask }) => {
         value={task}
         onChange={(e) => setTask(e.target.value)}
       />
-      <button type="submit">Agregar Tarea</button>
+      <button type="submit">{editingTask ? 'Actualizar Tarea' : 'Agregar Tarea'}</button>
     </form>
   );
 };
